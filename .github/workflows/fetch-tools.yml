@@ -1,0 +1,51 @@
+name: Fetch AI Tools
+
+# Runs the discovery pipeline on a schedule and on demand.
+on:
+  schedule:
+    # Every 3 hours (UTC). GitHub Actions cron is free for public repos.
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
+
+# Allow the workflow to push commits back to the repo.
+permissions:
+  contents: write
+
+# Don't pile up runs if a previous one is still going.
+concurrency:
+  group: fetch-tools
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run discovery pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+        run: node scripts/fetch-tools.mjs
+
+      - name: Commit pending updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Only data/pending.json and data/last-run.json may change here.
+          # The "[skip ci]" tag prevents Cloudflare Pages / Vercel from rebuilding —
+          # only changes to data/tools.json (committed by a human after approval) deploy.
+          if [ -n "$(git status --porcelain data/pending.json data/last-run.json)" ]; then
+            git add data/pending.json data/last-run.json
+            git commit -m "chore(data): update discovered AI tools [skip ci]"
+            git push
+            echo "Pushed pending updates."
+          else
+            echo "No pending changes to commit."
+          fi

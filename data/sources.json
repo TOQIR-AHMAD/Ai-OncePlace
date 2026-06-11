@@ -1,0 +1,25 @@
+{
+  "_comment": "Edit this file to add/remove discovery sources. The pipeline reads it on every run. Dead or unreachable feeds are skipped gracefully and never crash the run.",
+  "rssFeeds": [
+    { "name": "Anthropic News", "url": "https://www.anthropic.com/rss.xml" },
+    { "name": "OpenAI Blog", "url": "https://openai.com/blog/rss.xml" },
+    { "name": "Google DeepMind Blog", "url": "https://deepmind.google/blog/rss.xml" },
+    { "name": "Meta AI Blog", "url": "https://ai.meta.com/blog/rss/" },
+    { "name": "Mistral News", "url": "https://mistral.ai/news/feed.xml" },
+    { "name": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml" },
+    { "name": "Stability AI News", "url": "https://stability.ai/news?format=rss" }
+  ],
+  "hackerNews": {
+    "enabled": true,
+    "queries": ["AI", "launch", "Show HN"],
+    "minPoints": 20
+  },
+  "reddit": [
+    { "name": "r/artificial", "url": "https://www.reddit.com/r/artificial/new.json?limit=25" },
+    { "name": "r/SideProject", "url": "https://www.reddit.com/r/SideProject/new.json?limit=25" }
+  ],
+  "googleNews": {
+    "enabled": true,
+    "query": "new AI tool launched"
+  }
+}

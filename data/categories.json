@@ -1,0 +1,92 @@
+[
+  {
+    "slug": "chatbots-assistants",
+    "name": "Chatbots & Assistants",
+    "icon": "MessageSquare",
+    "description": "Conversational AI assistants for writing, research, coding, and everyday questions."
+  },
+  {
+    "slug": "image-generation",
+    "name": "Image Generation",
+    "icon": "Image",
+    "description": "Text-to-image and image editing tools that turn prompts into original visuals."
+  },
+  {
+    "slug": "video-generation",
+    "name": "Video Generation",
+    "icon": "Video",
+    "description": "AI tools that create, edit, and enhance video from text, images, or avatars."
+  },
+  {
+    "slug": "audio-music",
+    "name": "Audio & Music",
+    "icon": "Music",
+    "description": "Generate songs, soundtracks, and edit audio with AI-powered creative tools."
+  },
+  {
+    "slug": "writing-seo",
+    "name": "Writing & SEO",
+    "icon": "PenLine",
+    "description": "AI copywriters and SEO assistants for articles, ads, and on-brand content."
+  },
+  {
+    "slug": "coding-developer-tools",
+    "name": "Coding & Developer Tools",
+    "icon": "Code",
+    "description": "AI pair programmers, code editors, and assistants that speed up software development."
+  },
+  {
+    "slug": "productivity",
+    "name": "Productivity",
+    "icon": "ListChecks",
+    "description": "Assistants that summarize, organize, and automate your daily workflows."
+  },
+  {
+    "slug": "automation-agents",
+    "name": "Automation & Agents",
+    "icon": "Bot",
+    "description": "Build autonomous agents and connect apps into automated, AI-driven workflows."
+  },
+  {
+    "slug": "design-ui",
+    "name": "Design & UI",
+    "icon": "Palette",
+    "description": "Generate designs, presentations, and websites with AI-assisted creative tools."
+  },
+  {
+    "slug": "marketing",
+    "name": "Marketing",
+    "icon": "Megaphone",
+    "description": "AI tools for ads, campaigns, creatives, and growth marketing at scale."
+  },
+  {
+    "slug": "education",
+    "name": "Education",
+    "icon": "GraduationCap",
+    "description": "AI tutors and learning assistants that help students and teachers."
+  },
+  {
+    "slug": "data-analytics",
+    "name": "Data & Analytics",
+    "icon": "BarChart3",
+    "description": "Analyze data, build charts, and surface insights through natural language."
+  },
+  {
+    "slug": "voice-speech",
+    "name": "Voice & Speech",
+    "icon": "Mic",
+    "description": "Text-to-speech, voice cloning, and dubbing tools with realistic AI voices."
+  },
+  {
+    "slug": "search-engines",
+    "name": "Search Engines",
+    "icon": "Search",
+    "description": "AI answer engines that search the web and return concise, cited results."
+  },
+  {
+    "slug": "business-finance",
+    "name": "Business & Finance",
+    "icon": "Briefcase",
+    "description": "AI assistants for budgeting, finance, operations, and business decisions."
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "name": "axploria",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A production-ready AI tools directory with an automated discovery pipeline. 100% free infrastructure.",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "fetch": "node scripts/fetch-tools.mjs",
+    "approve": "node scripts/approve.mjs",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "framer-motion": "^11.18.2",
+    "fuse.js": "^7.0.0",
+    "lucide-react": "^0.408.0",
+    "next": "14.2.35",
+    "next-themes": "^0.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.45.0",
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6",
+    "typescript": "^5.5.3"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}
