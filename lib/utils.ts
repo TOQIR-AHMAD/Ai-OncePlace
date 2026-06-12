@@ -1,9 +1,11 @@
 import type { Pricing, Tool } from './types';
 
-/** Public base URL of the site. Configure via NEXT_PUBLIC_SITE_URL. */
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://axploria.pages.dev'
-).replace(/\/$/, '');
+/** Public base URL of the site. Override via NEXT_PUBLIC_SITE_URL. */
+const DEFAULT_SITE_URL = 'https://ai-once-place.vercel.app';
+const RAW_SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? '').trim().replace(/\/+$/, '');
+// Guard against an empty/malformed env value: `new URL(SITE_URL)` in app/layout.tsx
+// throws on an invalid URL and would fail the entire production build.
+export const SITE_URL = /^https?:\/\/[^/]+/.test(RAW_SITE_URL) ? RAW_SITE_URL : DEFAULT_SITE_URL;
 
 export const SITE_NAME = 'Axploria';
 export const SITE_TAGLINE = 'The directory of the best AI tools';
