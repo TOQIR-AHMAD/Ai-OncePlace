@@ -4,12 +4,12 @@
  *
  * Pulls fresh items from free sources (RSS, Hacker News, Reddit, Google News),
  * filters to items newer than the last run, dedupes against existing data, asks
- * Google Gemini to classify each candidate, and (by default) auto-publishes
+ * Groq (an LLM) to classify each candidate, and (by default) auto-publishes
  * high-confidence AI tools straight to data/tools.json — the live site. Set
  * AUTO_PUBLISH=false to route them to data/pending.json for `npm run approve`.
  *
  * No heavy dependencies — native fetch + a tiny RSS parser.
- * Run: `node scripts/fetch-tools.mjs`  (needs GEMINI_API_KEY in env)
+ * Run: `node scripts/fetch-tools.mjs`  (needs GROQ_API_KEY in env)
  */
 
 import { readFile, writeFile } from 'node:fs/promises';
@@ -22,9 +22,9 @@ const DATA_DIR = join(__dirname, '..', 'data');
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
-const GEMINI_DELAY_MS = 4000; // delay between calls to stay under the ~15 req/min free tier
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
+const GROQ_MODEL = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+const LLM_DELAY_MS = 2000; // delay between calls to stay under Groq's free 30 req/min
 const CONFIDENCE_THRESHOLD = 0.7;
 // Publish discovered tools straight to the live site (data/tools.json) instead of
 // queuing them in data/pending.json for manual review. On by default; disable with
@@ -279,7 +279,7 @@ async function collectGoogleNews(config, sinceMs, summary) {
 }
 
 // ---------------------------------------------------------------------------
-// Gemini classification
+// Groq (LLM) classification
 // ---------------------------------------------------------------------------
 function stripJsonFences(text) {
   return text
@@ -307,28 +307,33 @@ Item title: ${candidate.title}
 Item URL: ${candidate.url}`;
 
   const body = {
-    contents: [{ parts: [{ text: prompt }] }],
-    generationConfig: {
-      temperature: 0.2,
-      responseMimeType: 'application/json',
-    },
+    model: GROQ_MODEL,
+    messages: [
+      { role: 'system', content: 'You are a precise classifier. Respond with strict JSON only.' },
+      { role: 'user', content: prompt },
+    ],
+    temperature: 0.2,
+    response_format: { type: 'json_object' },
   };
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+  const url = 'https://api.groq.com/openai/v1/chat/completions';
 
   // Retry transient rate-limit (429) / overload (503) responses with backoff.
   const MAX_ATTEMPTS = 3;
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     const res = await fetchWithTimeout(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${GROQ_API_KEY}`,
+      },
       body: JSON.stringify(body),
     });
 
     if (res.ok) {
       const data = await res.json();
-      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-      if (!text) throw new Error('empty Gemini response');
+      const text = data?.choices?.[0]?.message?.content || '';
+      if (!text) throw new Error('empty Groq response');
       return JSON.parse(stripJsonFences(text));
     }
 
@@ -337,7 +342,7 @@ Item URL: ${candidate.url}`;
       await sleep(attempt * 8000); // back off 8s, then 16s
       continue;
     }
-    const err = new Error(`Gemini HTTP ${res.status} ${detail.slice(0, 120)}`);
+    const err = new Error(`Groq HTTP ${res.status} ${detail.slice(0, 120)}`);
     err.status = res.status;
     throw err;
   }
@@ -413,10 +418,10 @@ async function main() {
     );
   }
 
-  // 4. Classify with Gemini.
-  if (!GEMINI_API_KEY) {
-    console.log('⚠ GEMINI_API_KEY is not set — skipping classification.');
-    console.log('  Set it and re-run to discover tools. last-run.json left unchanged.\n');
+  // 4. Classify with Groq.
+  if (!GROQ_API_KEY) {
+    console.log('⚠ GROQ_API_KEY is not set — skipping classification.');
+    console.log('  Get a free key at https://console.groq.com/keys, then re-run. last-run.json left unchanged.\n');
     printSummary(summary);
     return;
   }
@@ -428,7 +433,7 @@ async function main() {
   // Slug uniqueness across everything we might write into (live tools + queue).
   const usedSlugs = new Set([...tools, ...pending].map((t) => t.slug));
   let added = 0;
-  let consecutive429 = 0; // bail out early if the Gemini free-tier quota is exhausted
+  let consecutive429 = 0; // bail out early if the Groq free-tier quota is exhausted
   let quotaStopped = false;
 
   for (let i = 0; i < candidates.length; i++) {
@@ -496,13 +501,13 @@ async function main() {
       console.log(`✗ ${err.message}`);
       // Repeated 429s mean the free-tier quota is spent — stop and resume next run.
       if (err.status === 429 && ++consecutive429 >= 3) {
-        console.log('\n⚠ Gemini rate/quota limit hit repeatedly — stopping early; will resume next run.');
+        console.log('\n⚠ Groq rate/quota limit hit repeatedly — stopping early; will resume next run.');
         quotaStopped = true;
         break;
       }
     }
 
-    if (i < candidates.length - 1) await sleep(GEMINI_DELAY_MS);
+    if (i < candidates.length - 1) await sleep(LLM_DELAY_MS);
   }
 
   summary.added = added;
