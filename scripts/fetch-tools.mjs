@@ -4,12 +4,12 @@
  *
  * Pulls fresh items from free sources (RSS, Hacker News, Reddit, Google News),
  * filters to items newer than the last run, dedupes against existing data, asks
- * Groq (an LLM) to classify each candidate, and (by default) auto-publishes
+ * GitHub Models to classify each candidate, and (by default) auto-publishes
  * high-confidence AI tools straight to data/tools.json — the live site. Set
  * AUTO_PUBLISH=false to route them to data/pending.json for `npm run approve`.
  *
  * No heavy dependencies — native fetch + a tiny RSS parser.
- * Run: `node scripts/fetch-tools.mjs`  (needs GROQ_API_KEY in env)
+ * Run: `node scripts/fetch-tools.mjs`  (uses GITHUB_TOKEN in CI; GH_MODELS_TOKEN locally)
  */
 
 import { readFile, writeFile } from 'node:fs/promises';
@@ -22,15 +22,17 @@ const DATA_DIR = join(__dirname, '..', 'data');
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
-const GROQ_API_KEY = process.env.GROQ_API_KEY;
-const GROQ_MODEL = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
-const LLM_DELAY_MS = 2000; // delay between calls to stay under Groq's free 30 req/min
+// GitHub Models — authenticates with the workflow's built-in GITHUB_TOKEN (no signup
+// or API key needed). For local runs, set GH_MODELS_TOKEN to a PAT with `models:read`.
+const LLM_TOKEN = process.env.GITHUB_TOKEN || process.env.GH_MODELS_TOKEN;
+const LLM_MODEL = process.env.LLM_MODEL || 'openai/gpt-4o-mini';
+const LLM_DELAY_MS = 3000; // delay between calls to respect the free-tier rate limit
 const CONFIDENCE_THRESHOLD = 0.7;
 // Publish discovered tools straight to the live site (data/tools.json) instead of
 // queuing them in data/pending.json for manual review. On by default; disable with
 // AUTO_PUBLISH=false. Raise CONFIDENCE_THRESHOLD for a stricter auto-publish bar.
 const AUTO_PUBLISH = (process.env.AUTO_PUBLISH ?? 'true').toLowerCase() !== 'false';
-const MAX_CANDIDATES_PER_RUN = 25; // cap classification calls per run
+const MAX_CANDIDATES_PER_RUN = 12; // cap classification calls per run (free-tier friendly)
 const FETCH_TIMEOUT_MS = 15000;
 const USER_AGENT = 'AxploriaBot/1.0 (+https://axploria.pages.dev)';
 
@@ -279,7 +281,7 @@ async function collectGoogleNews(config, sinceMs, summary) {
 }
 
 // ---------------------------------------------------------------------------
-// Groq (LLM) classification
+// GitHub Models classification
 // ---------------------------------------------------------------------------
 function stripJsonFences(text) {
   return text
@@ -307,7 +309,7 @@ Item title: ${candidate.title}
 Item URL: ${candidate.url}`;
 
   const body = {
-    model: GROQ_MODEL,
+    model: LLM_MODEL,
     messages: [
       { role: 'system', content: 'You are a precise classifier. Respond with strict JSON only.' },
       { role: 'user', content: prompt },
@@ -316,7 +318,7 @@ Item URL: ${candidate.url}`;
     response_format: { type: 'json_object' },
   };
 
-  const url = 'https://api.groq.com/openai/v1/chat/completions';
+  const url = 'https://models.github.ai/inference/chat/completions';
 
   // Retry transient rate-limit (429) / overload (503) responses with backoff.
   const MAX_ATTEMPTS = 3;
@@ -325,7 +327,8 @@ Item URL: ${candidate.url}`;
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${GROQ_API_KEY}`,
+        Accept: 'application/vnd.github+json',
+        Authorization: `Bearer ${LLM_TOKEN}`,
       },
       body: JSON.stringify(body),
     });
@@ -333,7 +336,7 @@ Item URL: ${candidate.url}`;
     if (res.ok) {
       const data = await res.json();
       const text = data?.choices?.[0]?.message?.content || '';
-      if (!text) throw new Error('empty Groq response');
+      if (!text) throw new Error('empty model response');
       return JSON.parse(stripJsonFences(text));
     }
 
@@ -342,7 +345,7 @@ Item URL: ${candidate.url}`;
       await sleep(attempt * 8000); // back off 8s, then 16s
       continue;
     }
-    const err = new Error(`Groq HTTP ${res.status} ${detail.slice(0, 120)}`);
+    const err = new Error(`GitHub Models HTTP ${res.status} ${detail.slice(0, 120)}`);
     err.status = res.status;
     throw err;
   }
@@ -418,10 +421,10 @@ async function main() {
     );
   }
 
-  // 4. Classify with Groq.
-  if (!GROQ_API_KEY) {
-    console.log('⚠ GROQ_API_KEY is not set — skipping classification.');
-    console.log('  Get a free key at https://console.groq.com/keys, then re-run. last-run.json left unchanged.\n');
+  // 4. Classify with GitHub Models.
+  if (!LLM_TOKEN) {
+    console.log('⚠ No model token (GITHUB_TOKEN / GH_MODELS_TOKEN) — skipping classification.');
+    console.log('  In CI this is provided automatically; locally set GH_MODELS_TOKEN. last-run.json left unchanged.\n');
     printSummary(summary);
     return;
   }
@@ -433,7 +436,7 @@ async function main() {
   // Slug uniqueness across everything we might write into (live tools + queue).
   const usedSlugs = new Set([...tools, ...pending].map((t) => t.slug));
   let added = 0;
-  let consecutive429 = 0; // bail out early if the Groq free-tier quota is exhausted
+  let consecutive429 = 0; // bail out early if the free-tier quota is exhausted
   let quotaStopped = false;
 
   for (let i = 0; i < candidates.length; i++) {
@@ -501,7 +504,7 @@ async function main() {
       console.log(`✗ ${err.message}`);
       // Repeated 429s mean the free-tier quota is spent — stop and resume next run.
       if (err.status === 429 && ++consecutive429 >= 3) {
-        console.log('\n⚠ Groq rate/quota limit hit repeatedly — stopping early; will resume next run.');
+        console.log('\n⚠ Model rate/quota limit hit repeatedly — stopping early; will resume next run.');
         quotaStopped = true;
         break;
       }

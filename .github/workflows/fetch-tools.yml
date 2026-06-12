@@ -10,6 +10,7 @@ on:
 # Allow the workflow to push commits back to the repo.
 permissions:
   contents: write
+  models: read
 
 # Don't pile up runs if a previous one is still going.
 concurrency:
@@ -30,8 +31,8 @@ jobs:
 
       - name: Run discovery pipeline
         env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          GROQ_MODEL: ${{ vars.GROQ_MODEL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
         run: node scripts/fetch-tools.mjs
 
       - name: Commit & publish discovered tools
