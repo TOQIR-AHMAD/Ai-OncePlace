@@ -1,7 +1,7 @@
 import type { Pricing, Tool } from './types';
 
 /** Public base URL of the site. Override via NEXT_PUBLIC_SITE_URL. */
-const DEFAULT_SITE_URL = 'https://ai-once-place.vercel.app';
+const DEFAULT_SITE_URL = 'https://aionceplace.vercel.app';
 const RAW_SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? '').trim().replace(/\/+$/, '');
 // Guard against an empty/malformed env value: `new URL(SITE_URL)` in app/layout.tsx
 // throws on an invalid URL and would fail the entire production build.
