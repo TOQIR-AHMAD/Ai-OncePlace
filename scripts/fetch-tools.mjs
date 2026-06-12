@@ -118,6 +118,19 @@ function nextId(tools) {
   return String(max + 1);
 }
 
+/** Heuristic score: higher = more likely an actual launchable tool vs. news/opinion. */
+function toolSignalScore(c) {
+  const title = (c.title || '').toLowerCase();
+  const source = (c.source || '').toLowerCase();
+  let score = 0;
+  if (/\bshow hn\b|\blaunch hn\b/.test(title) || source.includes('show hn')) score += 3;
+  if (source.includes('sideproject') || source.includes('product hunt') || source.includes('betalist')) score += 3;
+  if (/\b(launch(ed|ing)?|introduc\w+|releas\w+|now available|i (made|built)|built a|we built)\b/.test(title)) score += 1;
+  // Demote obvious news / opinion / commentary headlines.
+  if (/\b(why|how|opinion|court|lawsuit|apolog\w+|walks back|policy|study|report|according to)\b/.test(title)) score -= 2;
+  return score;
+}
+
 function toMs(dateStr) {
   if (!dateStr) return NaN;
   const t = new Date(dateStr).getTime();
@@ -412,6 +425,10 @@ async function main() {
   }
   summary.candidates = unique.length;
   console.log(`Found ${gathered.length} raw items → ${unique.length} unique new candidates.\n`);
+
+  // Prioritise likely tools (launches, Show HN, indie projects) so the news-heavy
+  // sources don't crowd real tools out of the per-run classification cap.
+  unique.sort((a, b) => toolSignalScore(b) - toolSignalScore(a));
 
   const candidates = unique.slice(0, MAX_CANDIDATES_PER_RUN);
   if (unique.length > MAX_CANDIDATES_PER_RUN) {
