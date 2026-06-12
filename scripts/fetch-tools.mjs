@@ -4,8 +4,9 @@
  *
  * Pulls fresh items from free sources (RSS, Hacker News, Reddit, Google News),
  * filters to items newer than the last run, dedupes against existing data, asks
- * Google Gemini to classify each candidate, and appends high-confidence AI tools
- * to data/pending.json for human review.
+ * Google Gemini to classify each candidate, and (by default) auto-publishes
+ * high-confidence AI tools straight to data/tools.json — the live site. Set
+ * AUTO_PUBLISH=false to route them to data/pending.json for `npm run approve`.
  *
  * No heavy dependencies — native fetch + a tiny RSS parser.
  * Run: `node scripts/fetch-tools.mjs`  (needs GEMINI_API_KEY in env)
@@ -25,6 +26,10 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
 const GEMINI_DELAY_MS = 1500; // delay between calls to respect free-tier rate limits
 const CONFIDENCE_THRESHOLD = 0.7;
+// Publish discovered tools straight to the live site (data/tools.json) instead of
+// queuing them in data/pending.json for manual review. On by default; disable with
+// AUTO_PUBLISH=false. Raise CONFIDENCE_THRESHOLD for a stricter auto-publish bar.
+const AUTO_PUBLISH = (process.env.AUTO_PUBLISH ?? 'true').toLowerCase() !== 'false';
 const MAX_CANDIDATES_PER_RUN = 25; // cap classification calls per run
 const FETCH_TIMEOUT_MS = 15000;
 const USER_AGENT = 'AxploriaBot/1.0 (+https://axploria.pages.dev)';
@@ -100,6 +105,15 @@ function slugify(input) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .replace(/-{2,}/g, '-');
+}
+
+/** Next sequential integer id (as a string) for a tools.json record. */
+function nextId(tools) {
+  const max = tools.reduce((m, t) => {
+    const n = parseInt(t.id, 10);
+    return Number.isNaN(n) ? m : Math.max(m, n);
+  }, 0);
+  return String(max + 1);
 }
 
 function toMs(dateStr) {
@@ -393,7 +407,7 @@ async function main() {
   // 4. Classify with Gemini.
   if (!GEMINI_API_KEY) {
     console.log('⚠ GEMINI_API_KEY is not set — skipping classification.');
-    console.log('  Set it and re-run to populate pending.json. last-run.json left unchanged.\n');
+    console.log('  Set it and re-run to discover tools. last-run.json left unchanged.\n');
     printSummary(summary);
     return;
   }
@@ -402,7 +416,8 @@ async function main() {
     console.log('No new candidates to classify.\n');
   }
 
-  const pendingSlugs = new Set(pending.map((p) => p.slug));
+  // Slug uniqueness across everything we might write into (live tools + queue).
+  const usedSlugs = new Set([...tools, ...pending].map((t) => t.slug));
   let added = 0;
 
   for (let i = 0; i < candidates.length; i++) {
@@ -414,26 +429,28 @@ async function main() {
 
       if (result.isAITool && typeof result.confidence === 'number' && result.confidence > CONFIDENCE_THRESHOLD) {
         const name = (result.name || c.title).trim();
-        let slug = slugify(name);
-        // Ensure unique slug within pending.
+        const base = slugify(name);
+        let slug = base;
         let n = 2;
-        while (pendingSlugs.has(slug)) slug = `${slugify(name)}-${n++}`;
-        pendingSlugs.add(slug);
+        while (usedSlugs.has(slug)) slug = `${base}-${n++}`;
+        usedSlugs.add(slug);
 
         const cats = Array.isArray(result.categories)
           ? result.categories.filter((s) => validSlugs.has(s))
           : [];
+        const pricing = ['free', 'freemium', 'paid', 'free-trial'].includes(result.pricing)
+          ? result.pricing
+          : 'freemium';
 
-        pending.push({
-          id: `auto-${Date.now()}-${i}`,
+        const record = {
+          // Live records use a sequential numeric id; queued ones keep a unique temp id.
+          id: AUTO_PUBLISH ? nextId(tools) : `auto-${Date.now()}-${i}`,
           slug,
           name,
           description: (result.description || '').trim(),
           url: result.url || c.url,
           logo: '',
-          pricing: ['free', 'freemium', 'paid', 'free-trial'].includes(result.pricing)
-            ? result.pricing
-            : 'freemium',
+          pricing,
           categories: cats,
           tags: [],
           upvotes: 0,
@@ -441,14 +458,20 @@ async function main() {
           verified: false,
           dateAdded: new Date().toISOString().slice(0, 10),
           source: 'auto',
-          _meta: {
+        };
+
+        if (AUTO_PUBLISH) {
+          tools.push(record);
+        } else {
+          record._meta = {
             confidence: result.confidence,
             discoveredFrom: c.source,
             originalTitle: c.title,
-          },
-        });
+          };
+          pending.push(record);
+        }
         added++;
-        console.log(`✓ added (conf ${result.confidence.toFixed(2)})`);
+        console.log(`✓ ${AUTO_PUBLISH ? 'published' : 'queued'} (conf ${result.confidence.toFixed(2)})`);
       } else {
         console.log(
           result.isAITool
@@ -466,8 +489,10 @@ async function main() {
 
   summary.added = added;
 
-  // 5. Persist results.
-  if (added > 0) await writeJson('pending.json', pending);
+  // 5. Persist results — published tools go to the live data, queued ones to pending.
+  if (added > 0) {
+    await writeJson(AUTO_PUBLISH ? 'tools.json' : 'pending.json', AUTO_PUBLISH ? tools : pending);
+  }
   await writeJson('last-run.json', { lastRun: new Date().toISOString() });
 
   console.log('');
@@ -480,7 +505,7 @@ function printSummary(summary) {
   console.log(`  Sources checked : ${summary.feeds.length}`);
   console.log(`  Unique candidates: ${summary.candidates}`);
   console.log(`  Classified      : ${summary.classified}`);
-  console.log(`  Added to pending: ${summary.added}`);
+  console.log(`  ${AUTO_PUBLISH ? 'Published to site' : 'Queued for review'}: ${summary.added}`);
   console.log(`  Errors          : ${summary.errors}`);
   console.log('─'.repeat(48));
 }

@@ -34,18 +34,21 @@ jobs:
           GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
         run: node scripts/fetch-tools.mjs
 
-      - name: Commit pending updates
+      - name: Commit & publish discovered tools
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Only data/pending.json and data/last-run.json may change here.
-          # The "[skip ci]" tag prevents Cloudflare Pages / Vercel from rebuilding —
-          # only changes to data/tools.json (committed by a human after approval) deploy.
-          if [ -n "$(git status --porcelain data/pending.json data/last-run.json)" ]; then
-            git add data/pending.json data/last-run.json
-            git commit -m "chore(data): update discovered AI tools [skip ci]"
+          git add data/tools.json data/pending.json data/last-run.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          elif git diff --cached --name-only | grep -q '^data/tools.json$'; then
+            # New tools were auto-published — let Vercel rebuild & deploy the live site.
+            git commit -m "feat(data): auto-publish newly discovered AI tools"
             git push
-            echo "Pushed pending updates."
+            echo "Published new tools — Vercel will redeploy."
           else
-            echo "No pending changes to commit."
+            # Only pipeline state changed (last-run / pending) — skip the rebuild.
+            git commit -m "chore(data): update pipeline state [skip ci]"
+            git push
+            echo "State-only update — no redeploy."
           fi
