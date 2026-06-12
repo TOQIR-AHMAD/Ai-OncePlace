@@ -23,9 +23,9 @@ const item: Variants = {
 
 export function Hero({ tools, totalCount }: { tools: Tool[]; totalCount: number }) {
   return (
-    <section className="relative overflow-hidden border-b border-slate-200 dark:border-slate-800">
-      {/* Animated background */}
-      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <section className="relative border-b border-slate-200 dark:border-slate-800">
+      {/* Animated background — clipped here (not on the section) so it doesn't crop the search dropdown */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
         <div className="absolute -top-24 left-[15%] h-72 w-72 rounded-full bg-brand-500/30 blur-3xl animate-blob" />
         <div className="absolute -top-10 right-[15%] h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl animate-blob [animation-delay:4s]" />
         <div className="absolute bottom-0 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-sky-500/10 blur-3xl animate-blob [animation-delay:8s]" />
