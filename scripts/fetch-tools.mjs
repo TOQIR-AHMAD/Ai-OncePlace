@@ -429,6 +429,7 @@ async function main() {
   const usedSlugs = new Set([...tools, ...pending].map((t) => t.slug));
   let added = 0;
   let consecutive429 = 0; // bail out early if the Gemini free-tier quota is exhausted
+  let quotaStopped = false;
 
   for (let i = 0; i < candidates.length; i++) {
     const c = candidates[i];
@@ -496,6 +497,7 @@ async function main() {
       // Repeated 429s mean the free-tier quota is spent — stop and resume next run.
       if (err.status === 429 && ++consecutive429 >= 3) {
         console.log('\n⚠ Gemini rate/quota limit hit repeatedly — stopping early; will resume next run.');
+        quotaStopped = true;
         break;
       }
     }
@@ -509,7 +511,11 @@ async function main() {
   if (added > 0) {
     await writeJson(AUTO_PUBLISH ? 'tools.json' : 'pending.json', AUTO_PUBLISH ? tools : pending);
   }
-  await writeJson('last-run.json', { lastRun: new Date().toISOString() });
+  // Only advance the cursor on a clean run — if we were cut short by an exhausted
+  // quota, leave it so the skipped candidates are re-scanned next run.
+  if (!quotaStopped) {
+    await writeJson('last-run.json', { lastRun: new Date().toISOString() });
+  }
 
   console.log('');
   printSummary(summary);
