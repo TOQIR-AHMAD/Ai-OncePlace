@@ -24,7 +24,7 @@ const DATA_DIR = join(__dirname, '..', 'data');
 // ---------------------------------------------------------------------------
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
-const GEMINI_DELAY_MS = 1500; // delay between calls to respect free-tier rate limits
+const GEMINI_DELAY_MS = 4000; // delay between calls to stay under the ~15 req/min free tier
 const CONFIDENCE_THRESHOLD = 0.7;
 // Publish discovered tools straight to the live site (data/tools.json) instead of
 // queuing them in data/pending.json for manual review. On by default; disable with
@@ -314,24 +314,33 @@ Item URL: ${candidate.url}`;
     },
   };
 
-  const res = await fetchWithTimeout(
-    `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,
-    {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+
+  // Retry transient rate-limit (429) / overload (503) responses with backoff.
+  const MAX_ATTEMPTS = 3;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const res = await fetchWithTimeout(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-    },
-  );
+    });
 
-  if (!res.ok) {
+    if (res.ok) {
+      const data = await res.json();
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      if (!text) throw new Error('empty Gemini response');
+      return JSON.parse(stripJsonFences(text));
+    }
+
     const detail = await res.text().catch(() => '');
-    throw new Error(`Gemini HTTP ${res.status} ${detail.slice(0, 120)}`);
+    if ((res.status === 429 || res.status === 503) && attempt < MAX_ATTEMPTS) {
+      await sleep(attempt * 8000); // back off 8s, then 16s
+      continue;
+    }
+    const err = new Error(`Gemini HTTP ${res.status} ${detail.slice(0, 120)}`);
+    err.status = res.status;
+    throw err;
   }
-
-  const data = await res.json();
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-  if (!text) throw new Error('empty Gemini response');
-  return JSON.parse(stripJsonFences(text));
 }
 
 // ---------------------------------------------------------------------------
@@ -419,6 +428,7 @@ async function main() {
   // Slug uniqueness across everything we might write into (live tools + queue).
   const usedSlugs = new Set([...tools, ...pending].map((t) => t.slug));
   let added = 0;
+  let consecutive429 = 0; // bail out early if the Gemini free-tier quota is exhausted
 
   for (let i = 0; i < candidates.length; i++) {
     const c = candidates[i];
@@ -426,6 +436,7 @@ async function main() {
     try {
       const result = await classify(c, categorySlugs);
       summary.classified++;
+      consecutive429 = 0;
 
       if (result.isAITool && typeof result.confidence === 'number' && result.confidence > CONFIDENCE_THRESHOLD) {
         const name = (result.name || c.title).trim();
@@ -482,6 +493,11 @@ async function main() {
     } catch (err) {
       summary.errors++;
       console.log(`✗ ${err.message}`);
+      // Repeated 429s mean the free-tier quota is spent — stop and resume next run.
+      if (err.status === 429 && ++consecutive429 >= 3) {
+        console.log('\n⚠ Gemini rate/quota limit hit repeatedly — stopping early; will resume next run.');
+        break;
+      }
     }
 
     if (i < candidates.length - 1) await sleep(GEMINI_DELAY_MS);
