@@ -7,8 +7,15 @@
     "url": "https://chat.openai.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["chatbots-assistants"],
-    "tags": ["chatbot", "openai", "gpt", "assistant"],
+    "categories": [
+      "chatbots-assistants"
+    ],
+    "tags": [
+      "chatbot",
+      "openai",
+      "gpt",
+      "assistant"
+    ],
     "upvotes": 9820,
     "featured": true,
     "verified": true,
@@ -23,8 +30,15 @@
     "url": "https://claude.ai",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["chatbots-assistants"],
-    "tags": ["chatbot", "anthropic", "assistant", "reasoning"],
+    "categories": [
+      "chatbots-assistants"
+    ],
+    "tags": [
+      "chatbot",
+      "anthropic",
+      "assistant",
+      "reasoning"
+    ],
     "upvotes": 7240,
     "featured": true,
     "verified": true,
@@ -39,8 +53,15 @@
     "url": "https://gemini.google.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["chatbots-assistants"],
-    "tags": ["chatbot", "google", "multimodal", "assistant"],
+    "categories": [
+      "chatbots-assistants"
+    ],
+    "tags": [
+      "chatbot",
+      "google",
+      "multimodal",
+      "assistant"
+    ],
     "upvotes": 6130,
     "featured": false,
     "verified": true,
@@ -55,8 +76,15 @@
     "url": "https://copilot.microsoft.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["chatbots-assistants"],
-    "tags": ["chatbot", "microsoft", "assistant", "office"],
+    "categories": [
+      "chatbots-assistants"
+    ],
+    "tags": [
+      "chatbot",
+      "microsoft",
+      "assistant",
+      "office"
+    ],
     "upvotes": 4180,
     "featured": false,
     "verified": true,
@@ -71,8 +99,15 @@
     "url": "https://www.perplexity.ai",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["search-engines"],
-    "tags": ["search", "answers", "research", "citations"],
+    "categories": [
+      "search-engines"
+    ],
+    "tags": [
+      "search",
+      "answers",
+      "research",
+      "citations"
+    ],
     "upvotes": 5410,
     "featured": true,
     "verified": true,
@@ -87,8 +122,14 @@
     "url": "https://you.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["search-engines"],
-    "tags": ["search", "assistant", "web"],
+    "categories": [
+      "search-engines"
+    ],
+    "tags": [
+      "search",
+      "assistant",
+      "web"
+    ],
     "upvotes": 2160,
     "featured": false,
     "verified": true,
@@ -103,8 +144,15 @@
     "url": "https://www.midjourney.com",
     "logo": "",
     "pricing": "paid",
-    "categories": ["image-generation"],
-    "tags": ["image", "art", "text-to-image", "generative"],
+    "categories": [
+      "image-generation"
+    ],
+    "tags": [
+      "image",
+      "art",
+      "text-to-image",
+      "generative"
+    ],
     "upvotes": 6900,
     "featured": true,
     "verified": true,
@@ -119,8 +167,14 @@
     "url": "https://openai.com/dall-e-3",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["image-generation"],
-    "tags": ["image", "openai", "text-to-image"],
+    "categories": [
+      "image-generation"
+    ],
+    "tags": [
+      "image",
+      "openai",
+      "text-to-image"
+    ],
     "upvotes": 4360,
     "featured": false,
     "verified": true,
@@ -135,8 +189,15 @@
     "url": "https://stability.ai",
     "logo": "",
     "pricing": "free",
-    "categories": ["image-generation"],
-    "tags": ["image", "open-source", "stability", "text-to-image"],
+    "categories": [
+      "image-generation"
+    ],
+    "tags": [
+      "image",
+      "open-source",
+      "stability",
+      "text-to-image"
+    ],
     "upvotes": 5120,
     "featured": false,
     "verified": true,
@@ -151,8 +212,15 @@
     "url": "https://leonardo.ai",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["image-generation"],
-    "tags": ["image", "art", "game-assets", "generative"],
+    "categories": [
+      "image-generation"
+    ],
+    "tags": [
+      "image",
+      "art",
+      "game-assets",
+      "generative"
+    ],
     "upvotes": 3280,
     "featured": false,
     "verified": false,
@@ -167,8 +235,15 @@
     "url": "https://firefly.adobe.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["image-generation"],
-    "tags": ["image", "adobe", "design", "generative"],
+    "categories": [
+      "image-generation"
+    ],
+    "tags": [
+      "image",
+      "adobe",
+      "design",
+      "generative"
+    ],
     "upvotes": 3010,
     "featured": false,
     "verified": true,
@@ -183,8 +258,15 @@
     "url": "https://runwayml.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["video-generation"],
-    "tags": ["video", "text-to-video", "editing", "generative"],
+    "categories": [
+      "video-generation"
+    ],
+    "tags": [
+      "video",
+      "text-to-video",
+      "editing",
+      "generative"
+    ],
     "upvotes": 4220,
     "featured": true,
     "verified": true,
@@ -199,8 +281,14 @@
     "url": "https://pika.art",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["video-generation"],
-    "tags": ["video", "text-to-video", "generative"],
+    "categories": [
+      "video-generation"
+    ],
+    "tags": [
+      "video",
+      "text-to-video",
+      "generative"
+    ],
     "upvotes": 2540,
     "featured": false,
     "verified": false,
@@ -215,8 +303,15 @@
     "url": "https://www.synthesia.io",
     "logo": "",
     "pricing": "paid",
-    "categories": ["video-generation"],
-    "tags": ["video", "avatars", "voiceover", "training"],
+    "categories": [
+      "video-generation"
+    ],
+    "tags": [
+      "video",
+      "avatars",
+      "voiceover",
+      "training"
+    ],
     "upvotes": 2980,
     "featured": false,
     "verified": true,
@@ -231,8 +326,15 @@
     "url": "https://www.heygen.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["video-generation"],
-    "tags": ["video", "avatars", "translation", "lip-sync"],
+    "categories": [
+      "video-generation"
+    ],
+    "tags": [
+      "video",
+      "avatars",
+      "translation",
+      "lip-sync"
+    ],
     "upvotes": 2720,
     "featured": false,
     "verified": false,
@@ -247,8 +349,15 @@
     "url": "https://elevenlabs.io",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["voice-speech"],
-    "tags": ["voice", "text-to-speech", "cloning", "dubbing"],
+    "categories": [
+      "voice-speech"
+    ],
+    "tags": [
+      "voice",
+      "text-to-speech",
+      "cloning",
+      "dubbing"
+    ],
     "upvotes": 4720,
     "featured": true,
     "verified": true,
@@ -263,8 +372,14 @@
     "url": "https://murf.ai",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["voice-speech"],
-    "tags": ["voice", "text-to-speech", "voiceover"],
+    "categories": [
+      "voice-speech"
+    ],
+    "tags": [
+      "voice",
+      "text-to-speech",
+      "voiceover"
+    ],
     "upvotes": 1980,
     "featured": false,
     "verified": false,
@@ -279,8 +394,15 @@
     "url": "https://suno.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["audio-music"],
-    "tags": ["music", "songs", "vocals", "generative"],
+    "categories": [
+      "audio-music"
+    ],
+    "tags": [
+      "music",
+      "songs",
+      "vocals",
+      "generative"
+    ],
     "upvotes": 3920,
     "featured": true,
     "verified": true,
@@ -295,8 +417,14 @@
     "url": "https://www.udio.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["audio-music"],
-    "tags": ["music", "songs", "generative"],
+    "categories": [
+      "audio-music"
+    ],
+    "tags": [
+      "music",
+      "songs",
+      "generative"
+    ],
     "upvotes": 2310,
     "featured": false,
     "verified": false,
@@ -311,8 +439,15 @@
     "url": "https://www.descript.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["audio-music"],
-    "tags": ["audio", "editing", "transcription", "podcast"],
+    "categories": [
+      "audio-music"
+    ],
+    "tags": [
+      "audio",
+      "editing",
+      "transcription",
+      "podcast"
+    ],
     "upvotes": 2450,
     "featured": false,
     "verified": true,
@@ -327,8 +462,15 @@
     "url": "https://www.jasper.ai",
     "logo": "",
     "pricing": "paid",
-    "categories": ["writing-seo"],
-    "tags": ["writing", "marketing", "copywriting", "teams"],
+    "categories": [
+      "writing-seo"
+    ],
+    "tags": [
+      "writing",
+      "marketing",
+      "copywriting",
+      "teams"
+    ],
     "upvotes": 2890,
     "featured": false,
     "verified": true,
@@ -343,8 +485,14 @@
     "url": "https://www.copy.ai",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["writing-seo"],
-    "tags": ["writing", "copywriting", "marketing"],
+    "categories": [
+      "writing-seo"
+    ],
+    "tags": [
+      "writing",
+      "copywriting",
+      "marketing"
+    ],
     "upvotes": 2140,
     "featured": false,
     "verified": false,
@@ -359,8 +507,15 @@
     "url": "https://writesonic.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["writing-seo"],
-    "tags": ["writing", "seo", "articles", "ads"],
+    "categories": [
+      "writing-seo"
+    ],
+    "tags": [
+      "writing",
+      "seo",
+      "articles",
+      "ads"
+    ],
     "upvotes": 1870,
     "featured": false,
     "verified": false,
@@ -375,8 +530,15 @@
     "url": "https://www.grammarly.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["writing-seo"],
-    "tags": ["writing", "grammar", "editing", "assistant"],
+    "categories": [
+      "writing-seo"
+    ],
+    "tags": [
+      "writing",
+      "grammar",
+      "editing",
+      "assistant"
+    ],
     "upvotes": 3450,
     "featured": false,
     "verified": true,
@@ -391,8 +553,15 @@
     "url": "https://github.com/features/copilot",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["coding-developer-tools"],
-    "tags": ["coding", "autocomplete", "developer", "github"],
+    "categories": [
+      "coding-developer-tools"
+    ],
+    "tags": [
+      "coding",
+      "autocomplete",
+      "developer",
+      "github"
+    ],
     "upvotes": 5810,
     "featured": true,
     "verified": true,
@@ -407,8 +576,15 @@
     "url": "https://www.cursor.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["coding-developer-tools"],
-    "tags": ["coding", "editor", "developer", "ide"],
+    "categories": [
+      "coding-developer-tools"
+    ],
+    "tags": [
+      "coding",
+      "editor",
+      "developer",
+      "ide"
+    ],
     "upvotes": 6320,
     "featured": true,
     "verified": true,
@@ -423,8 +599,15 @@
     "url": "https://replit.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["coding-developer-tools"],
-    "tags": ["coding", "ide", "agent", "deploy"],
+    "categories": [
+      "coding-developer-tools"
+    ],
+    "tags": [
+      "coding",
+      "ide",
+      "agent",
+      "deploy"
+    ],
     "upvotes": 3160,
     "featured": false,
     "verified": true,
@@ -439,8 +622,15 @@
     "url": "https://codeium.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["coding-developer-tools"],
-    "tags": ["coding", "autocomplete", "developer", "free"],
+    "categories": [
+      "coding-developer-tools"
+    ],
+    "tags": [
+      "coding",
+      "autocomplete",
+      "developer",
+      "free"
+    ],
     "upvotes": 2780,
     "featured": false,
     "verified": false,
@@ -455,8 +645,15 @@
     "url": "https://www.notion.so/product/ai",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["productivity"],
-    "tags": ["productivity", "notes", "summarize", "workspace"],
+    "categories": [
+      "productivity"
+    ],
+    "tags": [
+      "productivity",
+      "notes",
+      "summarize",
+      "workspace"
+    ],
     "upvotes": 3540,
     "featured": false,
     "verified": true,
@@ -471,8 +668,15 @@
     "url": "https://otter.ai",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["productivity"],
-    "tags": ["productivity", "transcription", "meetings", "notes"],
+    "categories": [
+      "productivity"
+    ],
+    "tags": [
+      "productivity",
+      "transcription",
+      "meetings",
+      "notes"
+    ],
     "upvotes": 2260,
     "featured": false,
     "verified": false,
@@ -487,8 +691,15 @@
     "url": "https://zapier.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["automation-agents"],
-    "tags": ["automation", "workflows", "integrations", "agents"],
+    "categories": [
+      "automation-agents"
+    ],
+    "tags": [
+      "automation",
+      "workflows",
+      "integrations",
+      "agents"
+    ],
     "upvotes": 3320,
     "featured": false,
     "verified": true,
@@ -503,8 +714,15 @@
     "url": "https://www.make.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["automation-agents"],
-    "tags": ["automation", "workflows", "no-code", "integrations"],
+    "categories": [
+      "automation-agents"
+    ],
+    "tags": [
+      "automation",
+      "workflows",
+      "no-code",
+      "integrations"
+    ],
     "upvotes": 2610,
     "featured": false,
     "verified": false,
@@ -519,8 +737,15 @@
     "url": "https://agpt.co",
     "logo": "",
     "pricing": "free",
-    "categories": ["automation-agents"],
-    "tags": ["agents", "autonomous", "open-source", "framework"],
+    "categories": [
+      "automation-agents"
+    ],
+    "tags": [
+      "agents",
+      "autonomous",
+      "open-source",
+      "framework"
+    ],
     "upvotes": 3880,
     "featured": false,
     "verified": false,
@@ -535,8 +760,15 @@
     "url": "https://www.canva.com/magic-studio",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["design-ui"],
-    "tags": ["design", "canva", "image", "editing"],
+    "categories": [
+      "design-ui"
+    ],
+    "tags": [
+      "design",
+      "canva",
+      "image",
+      "editing"
+    ],
     "upvotes": 4080,
     "featured": false,
     "verified": true,
@@ -551,8 +783,16 @@
     "url": "https://gamma.app",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["design-ui", "productivity"],
-    "tags": ["presentations", "design", "slides", "generative"],
+    "categories": [
+      "design-ui",
+      "productivity"
+    ],
+    "tags": [
+      "presentations",
+      "design",
+      "slides",
+      "generative"
+    ],
     "upvotes": 2960,
     "featured": true,
     "verified": false,
@@ -567,8 +807,15 @@
     "url": "https://www.framer.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["design-ui"],
-    "tags": ["website", "no-code", "design", "builder"],
+    "categories": [
+      "design-ui"
+    ],
+    "tags": [
+      "website",
+      "no-code",
+      "design",
+      "builder"
+    ],
     "upvotes": 2280,
     "featured": false,
     "verified": false,
@@ -583,8 +830,15 @@
     "url": "https://www.adcreative.ai",
     "logo": "",
     "pricing": "free-trial",
-    "categories": ["marketing"],
-    "tags": ["marketing", "ads", "creatives", "banners"],
+    "categories": [
+      "marketing"
+    ],
+    "tags": [
+      "marketing",
+      "ads",
+      "creatives",
+      "banners"
+    ],
     "upvotes": 1740,
     "featured": false,
     "verified": false,
@@ -599,8 +853,15 @@
     "url": "https://www.khanmigo.ai",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["education"],
-    "tags": ["education", "tutor", "learning", "students"],
+    "categories": [
+      "education"
+    ],
+    "tags": [
+      "education",
+      "tutor",
+      "learning",
+      "students"
+    ],
     "upvotes": 1980,
     "featured": false,
     "verified": true,
@@ -615,8 +876,15 @@
     "url": "https://julius.ai",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["data-analytics"],
-    "tags": ["data", "analytics", "charts", "spreadsheets"],
+    "categories": [
+      "data-analytics"
+    ],
+    "tags": [
+      "data",
+      "analytics",
+      "charts",
+      "spreadsheets"
+    ],
     "upvotes": 2050,
     "featured": false,
     "verified": false,
@@ -631,12 +899,55 @@
     "url": "https://web.meetcleo.com",
     "logo": "",
     "pricing": "freemium",
-    "categories": ["business-finance"],
-    "tags": ["finance", "budgeting", "money", "assistant"],
+    "categories": [
+      "business-finance"
+    ],
+    "tags": [
+      "finance",
+      "budgeting",
+      "money",
+      "assistant"
+    ],
     "upvotes": 1620,
     "featured": false,
     "verified": false,
     "dateAdded": "2026-06-05",
     "source": "manual"
+  },
+  {
+    "id": "41",
+    "slug": "intuned",
+    "name": "Intuned",
+    "description": "Build and run reliable browser automations as code.",
+    "url": "https://intunedhq.com",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "automation-agents"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-06-12",
+    "source": "auto"
+  },
+  {
+    "id": "42",
+    "slug": "command-center",
+    "name": "Command Center",
+    "description": "AI coding environment focused on quality for developers.",
+    "url": "https://www.cc.dev/",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "coding-developer-tools"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-06-12",
+    "source": "auto"
   }
 ]
