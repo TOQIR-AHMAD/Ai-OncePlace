@@ -41,3 +41,5 @@ next-env.d.ts
 # local notes & Claude Code local settings
 /idea.txt
 /.claude/
+
+.vercel
