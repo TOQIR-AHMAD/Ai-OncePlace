@@ -23,7 +23,7 @@ const DATA_DIR = join(__dirname, '..', 'data');
 // Config
 // ---------------------------------------------------------------------------
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
 const GEMINI_DELAY_MS = 1500; // delay between calls to respect free-tier rate limits
 const CONFIDENCE_THRESHOLD = 0.7;
 // Publish discovered tools straight to the live site (data/tools.json) instead of
