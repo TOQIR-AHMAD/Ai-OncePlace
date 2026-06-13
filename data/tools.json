@@ -949,5 +949,23 @@
     "verified": false,
     "dateAdded": "2026-06-12",
     "source": "auto"
+  },
+  {
+    "id": "43",
+    "slug": "verso",
+    "name": "Verso",
+    "description": "A Mac word processor designed for writers, available for a one-time purchase.",
+    "url": "https://www.versowriter.app",
+    "logo": "",
+    "pricing": "paid",
+    "categories": [
+      "writing-seo"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-06-13",
+    "source": "auto"
   }
 ]
