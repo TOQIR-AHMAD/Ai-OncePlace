@@ -967,5 +967,24 @@
     "verified": false,
     "dateAdded": "2026-06-13",
     "source": "auto"
+  },
+  {
+    "id": "44",
+    "slug": "voicedraw",
+    "name": "VoiceDraw",
+    "description": "A tool that converts spoken system design into visual diagrams automatically.",
+    "url": "https://voicedraw.com/",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "design-ui",
+      "productivity"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-06-16",
+    "source": "auto"
   }
 ]
