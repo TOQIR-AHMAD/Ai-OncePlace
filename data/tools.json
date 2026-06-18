@@ -986,5 +986,23 @@
     "verified": false,
     "dateAdded": "2026-06-16",
     "source": "auto"
+  },
+  {
+    "id": "45",
+    "slug": "testerarmy",
+    "name": "TesterArmy",
+    "description": "Automated agents that test web and mobile applications for functionality and performance.",
+    "url": "https://tester.army",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "automation-agents"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-06-18",
+    "source": "auto"
   }
 ]
