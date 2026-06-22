@@ -1004,5 +1004,23 @@
     "verified": false,
     "dateAdded": "2026-06-18",
     "source": "auto"
+  },
+  {
+    "id": "46",
+    "slug": "oak",
+    "name": "Oak",
+    "description": "Git replacement designed for agents to manage code and projects efficiently.",
+    "url": "https://oak.space/oak/oak",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "coding-developer-tools"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-06-22",
+    "source": "auto"
   }
 ]
