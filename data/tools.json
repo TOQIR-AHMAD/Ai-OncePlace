@@ -1022,5 +1022,23 @@
     "verified": false,
     "dateAdded": "2026-06-22",
     "source": "auto"
+  },
+  {
+    "id": "47",
+    "slug": "rubyllm",
+    "name": "RubyLLM",
+    "description": "A Ruby framework for integrating with major AI providers for development purposes.",
+    "url": "https://rubyllm.com/",
+    "logo": "",
+    "pricing": "free",
+    "categories": [
+      "coding-developer-tools"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-06-24",
+    "source": "auto"
   }
 ]
