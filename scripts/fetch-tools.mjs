@@ -27,12 +27,12 @@ const DATA_DIR = join(__dirname, '..', 'data');
 const LLM_TOKEN = process.env.GITHUB_TOKEN || process.env.GH_MODELS_TOKEN;
 const LLM_MODEL = process.env.LLM_MODEL || 'openai/gpt-4o-mini';
 const LLM_DELAY_MS = 3000; // delay between calls to respect the free-tier rate limit
-const CONFIDENCE_THRESHOLD = 0.7;
+const CONFIDENCE_THRESHOLD = Number(process.env.CONFIDENCE_THRESHOLD ?? 0.6);
 // Publish discovered tools straight to the live site (data/tools.json) instead of
 // queuing them in data/pending.json for manual review. On by default; disable with
 // AUTO_PUBLISH=false. Raise CONFIDENCE_THRESHOLD for a stricter auto-publish bar.
 const AUTO_PUBLISH = (process.env.AUTO_PUBLISH ?? 'true').toLowerCase() !== 'false';
-const MAX_CANDIDATES_PER_RUN = 12; // cap classification calls per run (free-tier friendly)
+const MAX_CANDIDATES_PER_RUN = Number(process.env.MAX_CANDIDATES_PER_RUN ?? 20); // cap classification calls per run
 const FETCH_TIMEOUT_MS = 15000;
 const USER_AGENT = 'AxploriaBot/1.0 (+https://axploria.pages.dev)';
 
