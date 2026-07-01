@@ -1040,5 +1040,23 @@
     "verified": false,
     "dateAdded": "2026-06-24",
     "source": "auto"
+  },
+  {
+    "id": "48",
+    "slug": "zcode-harness-for-glm-5-2",
+    "name": "ZCode – Harness for GLM-5.2",
+    "description": "A tool for managing and utilizing GLM-5.2 for various applications.",
+    "url": "https://zcode.z.ai/en",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "coding-developer-tools"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-07-01",
+    "source": "auto"
   }
 ]
