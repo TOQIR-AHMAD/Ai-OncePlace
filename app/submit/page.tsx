@@ -53,29 +53,19 @@ export default function SubmitPage() {
         </h2>
         <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1 dark:border-slate-800 dark:bg-slate-900">
           {/*
-            Placeholder for a Tally.so embedded form.
-            1. Create a free form at https://tally.so
-            2. Set TALLY_FORM_ID above to your form's ID.
-            The iframe below will then render your live form.
+            When TALLY_FORM_ID is configured, the live Tally.so form renders.
+            Until then, we show a real user-facing fallback (GitHub PR route)
+            instead of developer scaffolding.
           */}
           {TALLY_FORM_ID === 'YOUR_TALLY_FORM_ID' ? (
-            <div className="flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center dark:border-slate-700 dark:bg-slate-950">
+            <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center dark:border-slate-700 dark:bg-slate-950">
               <p className="font-medium text-slate-700 dark:text-slate-200">
-                Tally form placeholder
+                Submit your tool via GitHub
               </p>
               <p className="max-w-md text-sm text-slate-500 dark:text-slate-400">
-                Create a free form at{' '}
-                <a
-                  href="https://tally.so"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-brand-600 underline dark:text-brand-400"
-                >
-                  tally.so
-                </a>{' '}
-                and set <code className="rounded bg-slate-200 px-1 dark:bg-slate-800">TALLY_FORM_ID</code>{' '}
-                in <code className="rounded bg-slate-200 px-1 dark:bg-slate-800">app/submit/page.tsx</code>{' '}
-                to embed it here.
+                Open a pull request adding your tool to{' '}
+                <code className="rounded bg-slate-200 px-1 dark:bg-slate-800">data/tools.json</code>{' '}
+                and we&apos;ll review it. A one-click submission form is coming soon.
               </p>
             </div>
           ) : (
