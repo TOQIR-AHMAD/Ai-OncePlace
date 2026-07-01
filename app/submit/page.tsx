@@ -8,18 +8,13 @@ export const metadata: Metadata = {
   alternates: { canonical: '/submit' },
 };
 
-// Replace this with your real Tally form ID (e.g. "w7XpQA").
-const TALLY_FORM_ID = 'YOUR_TALLY_FORM_ID';
-
 const STEPS = [
-  'Fill in the submission form below with your tool name, URL, a one-line description, category, and pricing.',
+  'Open a pull request adding your tool to data/tools.json with its name, URL, a one-line description, category, and pricing.',
   'Our pipeline + a human reviewer check the submission for quality and accuracy.',
   'Approved tools are published to the directory, usually within a few days.',
 ];
 
 export default function SubmitPage() {
-  const tallySrc = `https://tally.so/embed/${TALLY_FORM_ID}?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1`;
-
   return (
     <div className="container-page max-w-3xl py-12">
       <header>
@@ -46,45 +41,6 @@ export default function SubmitPage() {
           </li>
         ))}
       </ol>
-
-      <section className="mt-10">
-        <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-          Submission form
-        </h2>
-        <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1 dark:border-slate-800 dark:bg-slate-900">
-          {/*
-            When TALLY_FORM_ID is configured, the live Tally.so form renders.
-            Until then, we show a real user-facing fallback (GitHub PR route)
-            instead of developer scaffolding.
-          */}
-          {TALLY_FORM_ID === 'YOUR_TALLY_FORM_ID' ? (
-            <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center dark:border-slate-700 dark:bg-slate-950">
-              <p className="font-medium text-slate-700 dark:text-slate-200">
-                Submit your tool via GitHub
-              </p>
-              <p className="max-w-md text-sm text-slate-500 dark:text-slate-400">
-                Open a pull request adding your tool to{' '}
-                <code className="rounded bg-slate-200 px-1 dark:bg-slate-800">data/tools.json</code>{' '}
-                and we&apos;ll review it. A one-click submission form is coming soon.
-              </p>
-            </div>
-          ) : (
-            <iframe
-              src={tallySrc}
-              loading="lazy"
-              width="100%"
-              height="600"
-              title="Submit your AI tool"
-              className="w-full rounded-xl"
-            />
-          )}
-        </div>
-      </section>
-
-      <p className="mt-6 text-sm text-slate-500 dark:text-slate-400">
-        Prefer email? You can also open a pull request adding your tool to{' '}
-        <code className="rounded bg-slate-200 px-1 dark:bg-slate-800">data/tools.json</code>.
-      </p>
     </div>
   );
 }
