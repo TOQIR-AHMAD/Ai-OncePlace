@@ -10,18 +10,31 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Primary blue — tuned to the aixploria palette (vivid blue CTAs).
         brand: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
-          950: '#1e1b4b',
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
+          950: '#172554',
+        },
+        // Signature yellow used by the boxed logo mark.
+        accent: {
+          400: '#ffdd33',
+          500: '#ffd400',
+          600: '#f0c000',
+        },
+        // Deep navy used by the footer.
+        ink: {
+          800: '#111a2e',
+          900: '#0b1220',
+          950: '#070c17',
         },
       },
       fontFamily: {

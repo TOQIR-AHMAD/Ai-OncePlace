@@ -85,7 +85,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
       </p>
 
       {categoryTools.length > 0 ? (
-        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-4 grid-cards">
           {categoryTools.map((tool, i) => (
             <Reveal key={tool.slug} delay={(i % 3) * 0.06}>
               <ToolCard tool={tool} />

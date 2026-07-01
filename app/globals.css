@@ -27,19 +27,57 @@
 
 @layer utilities {
   .container-page {
-    @apply mx-auto max-w-6xl px-4 sm:px-6;
+    @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8;
   }
 
-  /* Subtle dotted grid backdrop. */
+  /* Fluid card grid: cards auto-adjust their column count to the available
+     width instead of snapping at fixed breakpoints. */
+  .grid-cards {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  }
+
+  /* Denser variant for the compact category tiles. */
+  .grid-cards-sm {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
+  }
+
+  /* Faint blue lined grid backdrop (aixploria-style hero). */
   .bg-grid {
-    background-image: radial-gradient(circle, rgb(148 163 184 / 0.25) 1px, transparent 1px);
-    background-size: 22px 22px;
+    background-image:
+      linear-gradient(to right, rgb(37 99 235 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(37 99 235 / 0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .dark .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(96 165 250 / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(96 165 250 / 0.08) 1px, transparent 1px);
   }
 
   /* Animated gradient text — pair with `animate-gradient`. */
   .text-gradient {
-    @apply bg-gradient-to-r from-brand-500 via-fuchsia-500 to-brand-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 bg-clip-text text-transparent;
     background-size: 200% auto;
+  }
+
+  /* Gradient underline accent under titles (blue → purple → pink). */
+  .accent-underline {
+    background-image: linear-gradient(to right, #2563eb, #a855f7, #ec4899);
+  }
+
+  /* Soft pastel wash used at the foot of the page. */
+  .pastel-wash {
+    background-image: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(219 234 254 / 0.5) 30%,
+      rgb(243 232 255 / 0.6) 65%,
+      rgb(252 231 243 / 0.5)
+    );
   }
 }
 

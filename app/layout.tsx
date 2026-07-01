@@ -3,6 +3,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { ToastProvider } from '@/components/Toast';
 import { GlobalErrorListener } from '@/components/GlobalErrorListener';
+import { AnnouncementBar } from '@/components/AnnouncementBar';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from '@/lib/utils';
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ToastProvider>
             <GlobalErrorListener />
             <div className="flex min-h-screen flex-col">
+              <AnnouncementBar />
               <Header />
               <main className="flex-1">{children}</main>
               <Footer />

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Fuse from 'fuse.js';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Search, SlidersHorizontal } from 'lucide-react';
+import { BadgeCheck, Search, SlidersHorizontal } from 'lucide-react';
 import type { Category, Pricing, Tool } from '@/lib/types';
 import { PRICING_META, PRICING_OPTIONS } from '@/lib/utils';
 import { ToolCard } from './ToolCard';
@@ -27,15 +27,20 @@ export function ToolsExplorer({
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState(initialCategory);
   const [pricing, setPricing] = useState<'' | Pricing>('');
+  const [verified, setVerified] = useState(false);
   const [sort, setSort] = useState<Sort>('newest');
 
-  // Hydrate initial state from the URL (?q= & ?category=) without needing Suspense.
+  // Hydrate initial state from the URL (?q, ?category, ?pricing, ?verified, ?sort).
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const q = params.get('q');
     const cat = params.get('category');
+    const price = params.get('pricing');
     if (q) setQuery(q);
     if (cat) setCategory(cat);
+    if (price && PRICING_OPTIONS.includes(price as Pricing)) setPricing(price as Pricing);
+    if (params.get('verified') === '1') setVerified(true);
+    if (params.get('sort') === 'popular') setSort('popular');
   }, []);
 
   // Keep the URL shareable as filters change (no navigation / no scroll jump).
@@ -43,10 +48,12 @@ export function ToolsExplorer({
     const params = new URLSearchParams();
     if (query.trim()) params.set('q', query.trim());
     if (category) params.set('category', category);
+    if (pricing) params.set('pricing', pricing);
+    if (verified) params.set('verified', '1');
     const qs = params.toString();
     const url = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
     window.history.replaceState(null, '', url);
-  }, [query, category]);
+  }, [query, category, pricing, verified]);
 
   const fuse = useMemo(
     () =>
@@ -69,6 +76,7 @@ export function ToolsExplorer({
 
       if (category) list = list.filter((t) => t.categories.includes(category));
       if (pricing) list = list.filter((t) => t.pricing === pricing);
+      if (verified) list = list.filter((t) => t.verified);
 
       list.sort((a, b) =>
         sort === 'popular'
@@ -81,12 +89,13 @@ export function ToolsExplorer({
       toast.error('Could not filter tools', err instanceof Error ? err.message : undefined);
       return [];
     }
-  }, [fuse, query, category, pricing, sort, tools, toast]);
+  }, [fuse, query, category, pricing, verified, sort, tools, toast]);
 
   function clearFilters() {
     setQuery('');
     setCategory('');
     setPricing('');
+    setVerified(false);
   }
 
   return (
@@ -159,6 +168,20 @@ export function ToolsExplorer({
             <option value="newest">Newest</option>
             <option value="popular">Most popular</option>
           </select>
+
+          <button
+            type="button"
+            onClick={() => setVerified((v) => !v)}
+            aria-pressed={verified}
+            className={`inline-flex h-10 items-center gap-1.5 rounded-lg border px-3 text-sm font-medium transition-colors ${
+              verified
+                ? 'border-brand-500 bg-brand-50 text-brand-700 dark:border-brand-500 dark:bg-brand-500/10 dark:text-brand-300'
+                : 'border-slate-200 bg-white text-slate-600 hover:border-brand-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300'
+            }`}
+          >
+            <BadgeCheck className="h-4 w-4" aria-hidden="true" />
+            Verified
+          </button>
         </div>
       </div>
 
@@ -178,10 +201,7 @@ export function ToolsExplorer({
       </p>
 
       {results.length > 0 ? (
-        <motion.div
-          layout
-          className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-        >
+        <motion.div layout className="mt-4 grid-cards">
           <AnimatePresence mode="popLayout">
             {results.map((tool) => (
               <motion.div

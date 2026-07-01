@@ -229,7 +229,7 @@ export default function ToolPage({ params }: { params: { slug: string } }) {
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
             Related tools
           </h2>
-          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 grid-cards">
             {related.map((t, i) => (
               <Reveal key={t.slug} delay={(i % 4) * 0.06}>
                 <ToolCard tool={t} />
