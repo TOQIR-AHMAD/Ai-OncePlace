@@ -1058,5 +1058,23 @@
     "verified": false,
     "dateAdded": "2026-07-01",
     "source": "auto"
+  },
+  {
+    "id": "49",
+    "slug": "mail-memories",
+    "name": "Mail Memories",
+    "description": "A desktop app for retrieving and organizing photos from Gmail.",
+    "url": "https://mailmemories.com",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "productivity"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-07-02",
+    "source": "auto"
   }
 ]
