@@ -1076,5 +1076,23 @@
     "verified": false,
     "dateAdded": "2026-07-02",
     "source": "auto"
+  },
+  {
+    "id": "50",
+    "slug": "shellular",
+    "name": "Shellular",
+    "description": "Run AI models like Claude Code, Codex, and Pi from your mobile device.",
+    "url": "https://shellular.dev/",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "coding-developer-tools"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-07-07",
+    "source": "auto"
   }
 ]
