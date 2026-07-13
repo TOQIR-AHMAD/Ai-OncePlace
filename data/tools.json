@@ -1094,5 +1094,23 @@
     "verified": false,
     "dateAdded": "2026-07-07",
     "source": "auto"
+  },
+  {
+    "id": "51",
+    "slug": "super-dario",
+    "name": "Super Dario",
+    "description": "An AI tool for generating images based on user input.",
+    "url": "https://superdario.pawb.de",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "image-generation"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-07-13",
+    "source": "auto"
   }
 ]
