@@ -1112,5 +1112,23 @@
     "verified": false,
     "dateAdded": "2026-07-13",
     "source": "auto"
+  },
+  {
+    "id": "52",
+    "slug": "one-more-letter",
+    "name": "One More Letter",
+    "description": "A word game that challenges players to create words by adding one letter.",
+    "url": "https://playonemoreletter.com/",
+    "logo": "",
+    "pricing": "free",
+    "categories": [
+      "productivity"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-07-16",
+    "source": "auto"
   }
 ]
