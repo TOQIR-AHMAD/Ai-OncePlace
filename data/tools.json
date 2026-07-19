@@ -1130,5 +1130,24 @@
     "verified": false,
     "dateAdded": "2026-07-16",
     "source": "auto"
+  },
+  {
+    "id": "53",
+    "slug": "qwen-3-8-max",
+    "name": "Qwen 3.8 Max",
+    "description": "AI model for various applications including chat and content generation.",
+    "url": "https://qwen.ai/home",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "chatbots-assistants",
+      "writing-seo"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-07-19",
+    "source": "auto"
   }
 ]
