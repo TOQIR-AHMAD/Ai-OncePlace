@@ -1149,5 +1149,23 @@
     "verified": false,
     "dateAdded": "2026-07-19",
     "source": "auto"
+  },
+  {
+    "id": "54",
+    "slug": "readkinetic",
+    "name": "ReadKinetic",
+    "description": "A speed reading tool for personal books, focusing on local-first access.",
+    "url": "https://www.readkinetic.com/app/",
+    "logo": "",
+    "pricing": "free",
+    "categories": [
+      "productivity"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-07-22",
+    "source": "auto"
   }
 ]
