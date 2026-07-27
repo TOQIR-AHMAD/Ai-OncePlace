@@ -1167,5 +1167,23 @@
     "verified": false,
     "dateAdded": "2026-07-22",
     "source": "auto"
+  },
+  {
+    "id": "55",
+    "slug": "feynobg",
+    "name": "FeyNoBg",
+    "description": "Automatic background removal model and training library for images.",
+    "url": "https://usefeyn.com/blog/feynobg/",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "image-generation"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-07-27",
+    "source": "auto"
   }
 ]
