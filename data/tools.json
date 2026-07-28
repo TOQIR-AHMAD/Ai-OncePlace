@@ -1185,5 +1185,24 @@
     "verified": false,
     "dateAdded": "2026-07-27",
     "source": "auto"
+  },
+  {
+    "id": "56",
+    "slug": "tines-3b",
+    "name": "Tines 3B",
+    "description": "Workflow automation tool designed for software development teams to streamline processes.",
+    "url": "https://www.tines.com/",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "automation-agents",
+      "productivity"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-07-28",
+    "source": "auto"
   }
 ]
