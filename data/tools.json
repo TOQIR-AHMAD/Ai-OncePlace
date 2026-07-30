@@ -1204,5 +1204,24 @@
     "verified": false,
     "dateAdded": "2026-07-28",
     "source": "auto"
+  },
+  {
+    "id": "57",
+    "slug": "prized",
+    "name": "Prized",
+    "description": "A platform for non-engineers to create secure internal tools without coding.",
+    "url": "https://prized.dev",
+    "logo": "",
+    "pricing": "freemium",
+    "categories": [
+      "productivity",
+      "automation-agents"
+    ],
+    "tags": [],
+    "upvotes": 0,
+    "featured": false,
+    "verified": false,
+    "dateAdded": "2026-07-30",
+    "source": "auto"
   }
 ]
